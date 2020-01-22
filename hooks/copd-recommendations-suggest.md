@@ -21,11 +21,11 @@ Field | Optionality | Prefetch Token | Type | Description
 <mark>`patientID`</mark> | REQUIRED | Yes | *object* | <mark>identifier of current patient</mark>
 <mark>`userId`</mark> | OPTIONAL | Yes | *string* | <mark>identifier of current practitioner</mark>
 <mark>`encounterId`</mark> | OPTIONAL | Yes | *string* | <mark>identifier of current encounter</mark>
-<mark>`birthDate`</mark> | REQUIRED | Yes | *string* | <mark>date of birth of patient, used to identify whether Pneumococcal vaccine should be administered on patients of sixty-five years of age or older</mark>
-<mark>`currentSmoker`</mark> | REQUIRED | Yes | *boolean* | <mark>identifies current patient as a regular smoker or otherwise</mark>
-<mark>`comorbidities`</mark> | OPTIONAL | Yes | *object* | <mark>FHIR Bundle with conditions related to history of cardiovascular and renal disease</mark>
-<mark>`immunization`</mark> | REQUIRED | Yes | *object* | <mark>FHIR Bundle for immunization resources related to Influenza and Pneumococcal vaccines. Status is either completed or not-completed</mark>
-<mark>`copdGroup`</mark> | REQUIRED | Yes | *object* | <mark>FHIR Bundle containing reviewed COPD group and selected potential treatment(s)</mark>
+<mark>`birthDate`</mark> | REQUIRED | No | *string* | <mark>date of birth of patient, used to identify whether Pneumococcal vaccine should be administered on patients of sixty-five years of age or older</mark>
+<mark>`currentSmoker`</mark> | REQUIRED | No | *boolean* | <mark>identifies current patient as a regular smoker or otherwise</mark>
+<mark>`comorbidities`</mark> | OPTIONAL | No | *object* | <mark>FHIR Bundle with conditions related to history of cardiovascular and renal disease</mark>
+<mark>`immunization`</mark> | REQUIRED | No | *object* | <mark>FHIR Bundle for immunization resources related to Influenza and Pneumococcal vaccines. Status is either completed or not-completed</mark>
+<mark>`copdGroup`</mark> | REQUIRED | No | *object* | <mark>FHIR Bundle containing reviewed COPD group and selected potential treatment(s)</mark>
 
 ### Examples
 
