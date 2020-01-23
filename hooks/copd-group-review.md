@@ -2,8 +2,8 @@
 
 | Metadata | Value
 | ---- | ----
-| specificationVersion | 1.0
-| hookVersion | 1.0
+| specificationVersion | 1.1
+| hookVersion | 1.1
 | hookMaturity | [0 - Draft](../../specification/1.0/#hook-maturity-model)
 
 ## Workflow
@@ -19,9 +19,14 @@ Field | Optionality | Prefetch Token | Type | Description
 <mark>`patientId`</mark> | REQUIRED | Yes | *string* | <mark>identifier of current patient</mark>
 <mark>`userId`</mark> | OPTIONAL | Yes | *string* | <mark>identifier of current practitioner</mark>
 <mark>`encounterId`</mark> | OPTIONAL | Yes | *string* | <mark>identifier of current encounter</mark>
-<mark>`prevMeasurements`</mark> | REQUIRED | No | *object* | <mark>FHIR Bundle of Observation and Condition resource types for identifiers related to COPD group, mMRC Dyspnoea scale, CAT score and number of COPD-related exacerbations, all recorded at the immediately previous COPD group review.</mark>
-<mark>`currMeasurements`</mark> | REQUIRED | No | *object* | <mark>FHIR Bundle of Observation and Condition resource types for identifiers related to mMRC Dyspnoea scale, CAT score and number of COPD-related exacerbations, all recorded at the current encounter.</mark>
-<mark>`comorbidity`</mark> | OPTIONAL | No | *object* | <mark>Asthma Condition resource type.</mark>
+<mark>`copdGroup`</mark> | REQUIRED | No | *string* | <mark>String value representing the COPD group as recorded at previous COPD review.</mark>
+<mark>`mMrcScale_prev`</mark> | REQUIRED | No | *integer* | <mark>Integer value representing the mMRC Dyspnoea scale as recorded at previous COPD review.</mark>
+<mark>`catScore_prev`</mark> | REQUIRED | No | *integer* | <mark>Integer value representing the CAT score as recorded at previous COPD review.</mark>
+<mark>`exacerbations_prev`</mark> | REQUIRED | No | *integer* | <mark>Integer value representing the number of COPD-related exacerbations as recorded at previous COPD review.</mark>
+<mark>`mMrcScale_curr`</mark> | REQUIRED | No | *integer* | <mark>Integer value representing the mMRC Dyspnoea scale as recorded at current COPD review.</mark>
+<mark>`catScore_curr`</mark> | REQUIRED | No | *integer* | <mark>Integer value representing the CAT score as recorded at current COPD review.</mark>
+<mark>`exacerbations_curr`</mark> | REQUIRED | No | *integer* | <mark>Integer value representing the number of COPD-related exacerbations as recorded at previous COPD review.</mark>
+<mark>`isAsthmaPresent`</mark> | REQUIRED | No | *boolean* | <mark>Is Asthma Condition resource type present in the patient record?.</mark>
 
 ### Examples
 
@@ -32,211 +37,14 @@ Field | Optionality | Prefetch Token | Type | Description
         "patientId" : "18", 
         "userId" : "Practitioner/123456", 
         "encounterId" : "987654",
-        "prevMeasurements" : { 
-            "resourceType" : "Bundle",
-            "entry" :[
-                {
-                    "resource": {
-                        "resourceType": "Observation",
-                        "id": "cat_score_previous",
-                        "status": "final",
-                        "valueInteger": 24,
-                        "code": {
-                            "coding": [
-                                {
-                                    "system": "https://www.mdcalc.com/copd-assessment-test-cat",
-                                    "display": "CAT score previous"
-                                }
-                            ]
-                    },
-                    "effectiveDateTime": "2019-05-18T14:16:00-00:00",
-                    "referenceRange": [
-                        {
-                            "low": {
-                                "value": 0.0
-                            }
-                        },
-                        {
-                            "high": {
-                                "value": 35.0
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "resource" : {
-                    "resourceType": "Observation",
-                    "id": "mmrc_previous",
-                    "status": "final",
-                    "valueInteger": 3,
-                    "code": {
-                        "coding": [
-                            {
-                                "system": "https://www.mdcalc.com/mmrc-modified-medical-research-council-dyspnea-scale",
-                                "display": "mMRC previous"
-                            }
-                        ]
-                    },
-                    "effectiveDateTime": "2019-05-18T14:16:00-00:00",
-                    "referenceRange": [
-                        {
-                            "low": {
-                                "value": 0.0
-                            }
-                        },
-                        {
-                            "high": {
-                                "value": 4.0
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "resource" : {
-                    "resourceType": "Observation",
-                    "id": "copd_exacerbation_from_last_visit",
-                    "status": "final",
-                    "valueInteger": 0,
-                    "code": {
-                        "coding": [
-                            {
-                                "system": "https://mediately.co/hr/icd/J00-J99/set/J40-J47/cls/J44.1/kroni%C4%8Dna-opstruktivna-plu%C4%87na-bolest-s-akutnom-egzarcerbacijom-nespecificirana?q=j44.1",
-                                "code": "J44.1",
-                                "display": "COPD exacerbation from last visit"
-                            }
-                        ]
-                    },
-                    "effectiveDateTime": "2019-05-18T14:16:00-00:00"
-                }
-            },
-            {
-                "resource" : {
-                    "resourceType": "Observation",
-                    "id": "copd_group_previous",
-                    "status": "final",
-                    "valueString": "B",
-                        "code": {
-                            "coding": [
-                                {
-                                    "system": "https://www.mdcalc.com/global-initiative-obstructive-lung-disease-gold-criteria-copd",
-                                    "display": "COPD group previous"
-                                }
-                            ]
-                        },
-                    "effectiveDateTime": "2019-05-18T14:16:00-00:00",
-                    "referenceRange": [
-                        {
-                            "text": "A,B,C,D"
-                        }
-                    ]
-                }
-            }
-            ]
-        },
-        "currMeasurements" : { 
-            "resourceType" : "Bundle",
-            "entry" :[
-                {
-                    "resource": {
-                        "resourceType": "Observation",
-                        "id": "cat_score",
-                        "status": "preliminary",
-                        "valueInteger": 1,
-                        "code": {
-                            "coding": [
-                                {
-                                    "system": "https://www.mdcalc.com/copd-assessment-test-cat",
-                                    "display": "CAT score"
-                                }
-                            ]
-                    },
-                    "effectiveDateTime": "2019-11-21T15:44:00-00:00",
-                    "referenceRange": [
-                        {
-                            "low": {
-                                "value": 0.0
-                            }
-                        },
-                        {
-                            "high": {
-                                "value": 35.0
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "resource" : {
-                    "resourceType": "Observation",
-                    "id": "mmrc",
-                    "status": "preliminary",
-                    "valueInteger": 0,
-                    "code": {
-                        "coding": [
-                            {
-                                "system": "https://www.mdcalc.com/mmrc-modified-medical-research-council-dyspnea-scale",
-                                "display": "mMRC"
-                            }
-                        ]
-                    },
-                    "effectiveDateTime": "2019-11-21T15:44:00-00:00",
-                    "referenceRange": [
-                        {
-                            "low": {
-                                "value": 0.0
-                            }
-                        },
-                        {
-                            "high": {
-                                "value": 4.0
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "resource" : {
-                    "resourceType": "Observation",
-                    "id": "copd_exacerbation_from_now",
-                    "status": "final",
-                    "valueInteger": 0,
-                    "code": {
-                        "coding": [
-                            {
-                                "system": "https://mediately.co/hr/icd/J00-J99/set/J40-J47/cls/J44.1/kroni%C4%8Dna-opstruktivna-plu%C4%87na-bolest-s-akutnom-egzarcerbacijom-nespecificirana?q=j44.1",
-                                "code": "J44.1",
-                                "display": "COPD exacerbation from now"
-                            }
-                        ]
-                    },
-                    "effectiveDateTime": "2019-11-21T15:44:00-00:00"
-                }
-            }
-            ]
-        },
-        "comorbidity" : {
-            "resource" : 
-            {
-                "resourceType": "Condition",
-                "id": "asthma",
-                "code": {
-                    "coding": [
-                        {
-                            "system": "https://mediately.co/hr/icd/J00-J99/set/J40-J47/cls/J45/astma?q=j45",
-                            "code": "J45",
-                            "display": "Asthma"
-                        }
-                    ]
-                },
-                "subject": {
-                    "reference": "Patient/38",
-                    "display": "Link to patient"
-                },
-                "recordedDate": "2019-11-21T15:44:00-00:00"
-            }
-        }
+        "copdGroup" : "B",
+        "mMrcScale_prev" : 3,
+        "catScore_prev" : 24,
+        "exacerbations_prev" : 0,
+        "mMrcScale_curr" : 0,
+        "catScore_curr" : 1,
+        "exacerbations_curr" : 0,
+        "isAsthmaPresent" : true
     }
 }
 ```
@@ -245,4 +53,4 @@ Field | Optionality | Prefetch Token | Type | Description
 
 Version | Description
 ---- | ----
-1.0 | Initial Release
+1.0 | Descriptive itemization of parameters
