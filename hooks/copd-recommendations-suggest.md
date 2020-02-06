@@ -39,7 +39,7 @@ Field | Optionality | Prefetch Token | Type | Description
         "patientId" : "18", 
         "userId" : "Practitioner/123456", 
         "encounterId" : "987654",
-        "birthDate" : "1954-01-01T00:00:00-00:00",
+        "birthDate" : "1954-01-01",
         "currentSmoker" : true,
         "hasCardiovascularDisease": true,
         "hasRenalDisease": false,
@@ -75,4 +75,4 @@ Field | Optionality | Prefetch Token | Type | Description
 
 Version | Description
 ---- | ----
-1.1 | Itemised approach
+1.2 | tokenised approach
