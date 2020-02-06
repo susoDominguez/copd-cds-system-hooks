@@ -18,7 +18,7 @@ of personalised guidelines based on GOLD COPD 2017 where each of which contains 
 
 Field | Optionality | Prefetch Token | Type | Description
 ----- | -------- | ---- | ---- | ----
-<mark>`patientID`</mark> | REQUIRED | Yes | *object* | <mark>identifier of current patient</mark>
+<mark>`patientID`</mark> | REQUIRED | Yes | *string* | <mark>identifier of current patient</mark>
 <mark>`userId`</mark> | OPTIONAL | Yes | *string* | <mark>identifier of current practitioner</mark>
 <mark>`encounterId`</mark> | OPTIONAL | Yes | *string* | <mark>identifier of current encounter</mark>
 <mark>`birthDate`</mark> | REQUIRED | No | *string* | <mark>date of birth of patient, used to identify whether Pneumococcal vaccine should be administered on patients of sixty-five years of age or older</mark>
@@ -27,8 +27,8 @@ Field | Optionality | Prefetch Token | Type | Description
 <mark>`hasRenalDisease`</mark> | REQUIRED | No | *boolean* | <mark>Is Renal disease present in record?</mark>
 <mark>`hasAnnualInfluenzaVaccine`</mark> | REQUIRED | No | *boolean* | <mark>Has taken annual influenza vaccine?</mark>
 <mark>`hasPneumococcalVaccine`</mark> | REQUIRED | No | *boolean* | <mark>Has taken Pneumococcal vaccine?</mark>
-<mark>`copdGroup`</mark> | REQUIRED | No | *object* | <mark>Resource containing reviewed COPD group</mark>
-<mark>`treatmentOptions`</mark> | OPTIONAL | No | *object* | <mark>Resource containing user-selected COPD treatments. For the optional case, the CDS Service would select ALL suggested treatments for the given COPD group as sspecified at GOLD 2017 COPD guideline</mark>
+<mark>`copdGroup`</mark> | REQUIRED | No | *string* | <mark>string identifying COPD group as preliminary recorded at current COPD review.</mark>
+<mark>`treatmentOptions`</mark> | OPTIONAL | No | *Medication* | <mark>Resource containing user-selected COPD treatments. For the optional case, the CDS Service would select ALL suggested treatments for the given COPD group as sspecified at GOLD 2017 COPD guideline</mark>
 
 ### Examples
 
@@ -47,7 +47,6 @@ Field | Optionality | Prefetch Token | Type | Description
         "hasPneumococcalVaccine" : false, 
         "copdGroup" : "A",
         "treatmentOptions" : {
-            "resource" : {
                     "resourceType": "Medication",
                     "id": "suggested_treatments",
                     "code": {
@@ -66,9 +65,8 @@ Field | Optionality | Prefetch Token | Type | Description
                         }
                       ],
                       "text": "Suggested tretments by DSS"
-                    } 
-            }
-        }
+                   }
+         } 
     }
 }
 ```
