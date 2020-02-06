@@ -20,13 +20,13 @@ Field | Optionality | Prefetch Token | Type | Description
 <mark>`userId`</mark> | OPTIONAL | Yes | *string* | <mark>identifier of current practitioner</mark>
 <mark>`encounterId`</mark> | OPTIONAL | Yes | *string* | <mark>identifier of current encounter</mark>
 <mark>`copdGroup`</mark> | REQUIRED | No | *string* | <mark>String value representing the COPD group as recorded at previous COPD review.</mark>
-<mark>`mMrcScale_prev`</mark> | REQUIRED | No | *integer*|*string* | <mark>value representing the mMRC Dyspnoea scale as recorded at previous COPD review.</mark>
-<mark>`catScore_prev`</mark> | REQUIRED | No | *(integer | string)* | <mark>Integer value representing the CAT score as recorded at previous COPD review.</mark>
-<mark>`exacerbations_prev`</mark> | REQUIRED | No | *integer | string* | <mark>Integer value representing the number of COPD-related exacerbations as recorded at previous COPD review.</mark>
-<mark>`mMrcScale_curr`</mark> | REQUIRED | No | *integer | string* | <mark>Integer value representing the mMRC Dyspnoea scale as recorded at current COPD review.</mark>
-<mark>`catScore_curr`</mark> | REQUIRED | No | *integer | string* | <mark>Integer value representing the CAT score as recorded at current COPD review.</mark>
-<mark>`exacerbations_curr`</mark> | REQUIRED | No | *integer | string* | <mark>Integer value representing the number of COPD-related exacerbations as recorded at previous COPD review.</mark>
-<mark>`isAsthmaPresent`</mark> | REQUIRED | No | *boolean | integer | string* | <mark>Is Asthma Condition resource type present in the patient record?. Either true | false or 1 | 0 or "true" | "false" or "1" | "0"</mark>
+<mark>`mMrcScale_prev`</mark> | REQUIRED | No | *integer*\|*string* | <mark>value representing the mMRC Dyspnoea scale as recorded at previous COPD review.</mark>
+<mark>`catScore_prev`</mark> | REQUIRED | No | *integer*\|*string* | <mark>Integer value representing the CAT score as recorded at previous COPD review.</mark>
+<mark>`exacerbations_prev`</mark> | REQUIRED | No | *integer*\|*string* | <mark>Integer value representing the number of COPD-related exacerbations as recorded at previous COPD review.</mark>
+<mark>`mMrcScale_curr`</mark> | REQUIRED | No | *integer*\|*string* | <mark>Integer value representing the mMRC Dyspnoea scale as recorded at current COPD review.</mark>
+<mark>`catScore_curr`</mark> | REQUIRED | No | *integer*\|*string* | <mark>Integer value representing the CAT score as recorded at current COPD review.</mark>
+<mark>`exacerbations_curr`</mark> | REQUIRED | No | *integer*\|*string* | <mark>Integer value representing the number of COPD-related exacerbations as recorded at previous COPD review.</mark>
+<mark>`isAsthmaPresent`</mark> | REQUIRED | No | *boolean*\|*integer*\|*string* | <mark>Is Asthma Condition resource type present in the patient record?. Either true\|false or 1\|0 or "true"\|"false" or "1"\|"0"</mark>
 
 ### Examples
 
