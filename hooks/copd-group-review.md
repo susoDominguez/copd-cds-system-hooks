@@ -22,10 +22,10 @@ Field | Optionality | Prefetch Token | Type | Description
 <mark>`copdGroup_prev`</mark> | OPTIONAL | No | *Observation* | <mark>resource with 'final' status representing a patient's COPD group as recorded at previous COPD-related encounter. Omission of this resource suggests  patient has just been newly diagnosed with COPD at this encounter.</mark>
 <mark>`mMrcScale_prev`</mark> | OPTIONAL | No | *Observation* | <mark>resource with 'final' status representing the mMRC Dyspnoea scale as recorded at previous COPD-related encounter. Omission of this resource suggests  patient has just been newly diagnosed with COPD at this encounter.</mark>
 <mark>`catScore_prev`</mark> | OPTIONAL | No | *Observation* | <mark>resource with 'final' status representing the CAT score as recorded at previous COPD-related encounter. Omission of this resource suggests patient has just been newly diagnosed with COPD at this encounter.</mark>
-<mark>`exacerbations_prev`</mark> | OPTIONAL | No | *integer*\|*string* | <mark>value representing the number of COPD-related exacerbations as recorded at previous COPD-related encounter. Omission of this resource suggests patient has just been newly diagnosed with COPD at this encounter.</mark>
+<mark>`exacerbations_prev`</mark> | OPTIONAL | No | *integer*\|*string* | <mark>value representing the number of COPD-related exacerbations recorded in the last 12 months prior to the previous COPD-related encounter. Omission of this resource suggests patient has just been newly diagnosed with COPD at this encounter.</mark>
 <mark>`mMrcScale_curr`</mark> | REQUIRED | No | *Observation* | <mark>resource representing a patient's mMRC Dyspnoea scale as recorded at current encounter.</mark>
 <mark>`catScore_curr`</mark> | REQUIRED | No | *Observation* | <mark>resource  representing a patient's CAT score as recorded at current encounter.</mark>
-<mark>`exacerbations_curr`</mark> | REQUIRED | No | *integer*\|*string* | <mark>value representing the number of COPD-related exacerbations recorded between this and the previous COPD-related encounter.</mark>
+<mark>`exacerbations_curr`</mark> | REQUIRED | No | *integer*\|*string* | <mark>value representing the number of COPD-related exacerbations recorded in the last 12 months.</mark>
 <mark>`asthmaCondition`</mark> | OPTIONAL | No | *Condition* | <mark>resource denoting the presence of Asthma in patient's record.</mark>
 
 ### Examples
@@ -109,21 +109,7 @@ Field | Optionality | Prefetch Token | Type | Description
 				}
 			  ]
 		    },
-        "exacerbations_prev" : {
-			  "resourceType": "Observation",
-			  "id": "copd_exacerbation",
-			  "status": "final",
-			  "code": {
-				"coding": [
-				  {
-					"code": "J44.1",
-					"display": "Number of COPD exacerbation (J44.1) in the last 12 moths."
-				  }
-				]
-			  },
-			  "effectiveDateTime": "2018-11-06T14:47:00+02:00",
-			  "valueInteger" : "0"
-		   },
+        "exacerbations_prev" : 0,
         "mMrcScale_curr" : {
 			  "resourceType": "Observation",
 			  "id": "mMRC",
@@ -180,21 +166,7 @@ Field | Optionality | Prefetch Token | Type | Description
 				}
 			  ]
 		   },
-        "exacerbations_curr" : {
-			  "resourceType": "Observation",
-			  "id": "copd_exacerbation",
-			  "status": "preliminary",
-			  "code": {
-				"coding": [
-				  {
-					"code": "J44.1",
-					"display": "Number of COPD exacerbation (J44.1) in the last 12 moths."
-				  }
-				]
-			  },
-			  "effectiveDateTime": "2019-11-06T14:47:00+02:00",
-			  "valueInteger" : "0"
-		   },
+        "exacerbations_curr" : 0,
         "asthmaCondition" : {
 			  "resourceType": "Condition",
 			  "id": "asthma",
@@ -221,4 +193,4 @@ Field | Optionality | Prefetch Token | Type | Description
 
 Version | Description
 ---- | ----
-1.2 | Tokenised parameters
+1.2 | FHIR resource parameters
