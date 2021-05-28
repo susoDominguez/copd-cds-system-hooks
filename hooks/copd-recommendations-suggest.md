@@ -1,4 +1,4 @@
-# <mark>`copd-recommendations-suggest`</mark>
+# <mark>`copd-careplan-select`</mark>
 
 | Metadata | Value
 | ---- | ----
