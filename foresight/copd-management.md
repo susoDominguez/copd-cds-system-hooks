@@ -1,9 +1,9 @@
-# <mark>`copd-careplan-select`</mark>
+# <mark>`copd-management`</mark>
 
 | Metadata             | Value                                                     |
 | -------------------- | --------------------------------------------------------- |
-| specificationVersion | 2.2                                                       |
-| hookVersion          | 1.3                                                       |
+| specificationVersion | 1.0                                                       |
+| hookVersion          | 1.0                                                       |
 | hookMaturity         | [0 - Draft](../../specification/1.0/#hook-maturity-model) |
 
 ## Workflow
@@ -31,274 +31,524 @@
 
 ```json
 {
-  "hookInstance": "d1577c69-dfbe-44ad-ba6d-3e05e953b2ea",
-  "hook": "copd-careplan-select",
-  "context": {
-    "encounterId": "285064-0",
-    "patientId": "1677163",
-    "birthDate": "1946-10-03T00:00:00+01:00",
-    "smokingStatus": {
-      "resourceType": "Observation",
-      "id": "smoking_status",
-      "status": "final",
-      "code": {
-        "coding": [
+    "hookInstance": "d1577c69-dfbe-44ad-ba6d-3e05e953b2ea",
+    "hook": "copd-management",
+    "context": {
+      "encounterId": "285064-0",
+      "patientId": "1677163",
+      "birthDate": "1946-10-03T00:00:00+01:00",
+      "smokingStatus": {
+        "resourceType": "Observation",
+        "id": "smoking_status",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "229819007",
+              "display": "Tobacco use and exposure (observable entity)"
+            }
+          ]
+        },
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "77176002",
+              "display": "Smoker"
+            }
+          ]
+        },
+        "referenceRange": [
           {
-            "system": "http://snomed.info/sct",
-            "code": "229819007",
-            "display": "Tobacco use and exposure (observable entity)"
+            "low": {
+              "system": "http://snomed.info/sct",
+              "code": "8392000",
+              "display": "Non-smoker"
+            }
+          },
+          {
+            "high": {
+              "system": "http://snomed.info/sct",
+              "code": "77176002",
+              "display": "Smoker"
+            }
           }
         ]
       },
-      "valueCodeableConcept": {
-        "coding": [
+      "comorbidities": {
+        "resourceType": "Bundle",
+        "id": "comorbiditiesBundle",
+        "type": "collection",
+        "entry": [
           {
-            "system": "http://snomed.info/sct",
-            "code": "77176002",
-            "display": "Smoker"
+            "resource": {
+              "resourceType": "Condition",
+              "id": "cvd",
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "49601007",
+                    "display": "Disorder of cardiovascular system"
+                  }
+                ]
+              },
+              "subject": {
+                "reference": "Patient/1677163"
+              }
+            }
           }
         ]
       },
-      "referenceRange": [
-        {
-          "low": {
-            "system": "http://snomed.info/sct",
-            "code": "8392000",
-            "display": "Non-smoker"
-          }
-        },
-        {
-          "high": {
-            "system": "http://snomed.info/sct",
-            "code": "77176002",
-            "display": "Smoker"
-          }
-        }
-      ]
-    },
-    "comorbidities": {
-      "resourceType": "Bundle",
-      "id": "comorbiditiesBundle",
-      "type": "collection",
-      "entry": [
-        {
-          "resource": {
-            "resourceType": "Condition",
-            "id": "cvd",
-            "code": {
-              "coding": [
-                {
-                  "system": "http://snomed.info/sct",
-                  "code": "49601007",
-                  "display": "Disorder of cardiovascular system"
-                }
-              ]
-            },
-            "subject": {
-              "reference": "Patient/1677163"
+      "immunizationStatus": {
+        "resourceType": "Bundle",
+        "id": "immunizationStatusBundle",
+        "type": "collection",
+        "entry": [
+          {
+            "resource": {
+              "resourceType": "Immunization",
+              "id": "influenza_immunization",
+              "status": "completed",
+              "vaccineCode": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "1181000221105",
+                    "display": "Vaccine product containing only Influenza virus antigen"
+                  }
+                ]
+              },
+              "occurrenceDateTime": "2022-09-05T18:00:00+01:00"
             }
-          }
-        }
-      ]
-    },
-    "immunizationStatus": {
-      "resourceType": "Bundle",
-      "id": "immunizationStatusBundle",
-      "type": "collection",
-      "entry": [
-        {
-          "resource": {
-            "resourceType": "Immunization",
-            "id": "influenza_immunization",
-            "status": "completed",
-            "vaccineCode": {
-              "coding": [
-                {
-                  "system": "http://snomed.info/sct",
-                  "code": "1181000221105",
-                  "display": "Vaccine product containing only Influenza virus antigen"
-                }
-              ]
-            },
-            "occurrenceDateTime": "2022-09-05T18:00:00+01:00"
-          }
-        },
-        {
-          "resource": {
-            "resourceType": "Immunization",
-            "id": "pneumococcal_immunization",
-            "status": "not-done",
-            "vaccineCode": {
-              "coding": [
-                {
-                  "system": "http://snomed.info/sct",
-                  "code": "333598008",
-                  "display": "Pneumococcal vaccine"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "copdAssessment": {
-      "resourceType": "Bundle",
-      "id": "copdAssessmentBundle",
-      "type": "collection",
-      "entry": [
-        {
-          "resource": {
-            "resourceType": "Observation",
-            "id": "copd_group_curr",
-            "status": "preliminary",
-            "code": {
-              "coding": [
-                {
-                  "system": "http://snomed.info/sct",
-                  "code": "1097861000000108",
-                  "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group"
-                }
-              ],
-              "text": "COPD group"
-            },
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "system": "http://snomed.info/sct",
-                  "code": "1097881000000104",
-                  "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group B"
-                }
-              ]
-            },
-            "referenceRange": [
-              {
-                "low": {
-                  "system": "http://snomed.info/sct",
-                  "code": "1097871000000101",
-                  "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group A"
-                }
-              },
-              {
-                "low": {
-                  "system": "http://snomed.info/sct",
-                  "code": "1097881000000104",
-                  "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group B"
-                }
-              },
-              {
-                "high": {
-                  "system": "http://snomed.info/sct",
-                  "code": "1097891000000102",
-                  "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group C"
-                }
-              },
-              {
-                "high": {
-                  "system": "http://snomed.info/sct",
-                  "code": "1097901000000101",
-                  "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group D"
-                }
+          },
+          {
+            "resource": {
+              "resourceType": "Immunization",
+              "id": "pneumococcal_immunization",
+              "status": "not-done",
+              "vaccineCode": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "333598008",
+                    "display": "Pneumococcal vaccine"
+                  }
+                ]
               }
-            ]
+            }
           }
+        ]
+      },
+      "asthma": {
+        "resourceType": "Condition",
+        "id": "asthma",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "195967001",
+              "display": "Asthma"
+            }
+          ]
         },
-        {
-          "resource": {
-            "resourceType": "Bundle",
-            "id": "selected_treatments",
-            "type": "collection",
-            "entry": [
-              {
-                "resource": {
-                  "resourceType": "Medication",
-                  "id": "DrugTLaba",
-                  "code": {
-                    "coding": [
-                      {
-                        "code": "Laba",
-                        "display": "administer medication containing LABA"
-                      }
-                    ]
+        "subject": {
+          "reference": "Patient/1677163"
+        }
+      },
+      "currentAssessment": {
+        "resourceType": "Bundle",
+        "entry": [
+          {
+            "resource": {
+              "resourceType": "Condition",
+              "id": "copd_diagnosis",
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/sid/icd-10",
+                    "code": "J44.9",
+                    "display": "Chronic obstructive pulmonary disease, unspecified"
+                  }
+                ]
+              },
+              "subject": {
+                "reference": "Patient/1677163"
+              }
+            }
+          },
+          {
+            "resource": {
+              "resourceType": "Observation",
+              "id": "cat_score_curr",
+              "status": "preliminary",
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "446660005",
+                    "display": "Chronic obstructive pulmonary disease assessment test score"
+                  }
+                ]
+              },
+              "valueInteger": 23,
+              "referenceRange": [
+                {
+                  "low": {
+                    "value": 0,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "high": {
+                    "value": 9,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "Low impact level"
+                },
+                {
+                  "low": {
+                    "value": 10,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "high": {
+                    "value": 20,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "Medium impact level"
+                },
+                {
+                  "low": {
+                    "value": 21,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "high": {
+                    "value": 30,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "High impact level"
+                },
+                {
+                  "low": {
+                    "value": 31,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "high": {
+                    "value": 40,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "Very high impact level"
+                }
+              ]
+            }
+          },
+          {
+            "resource": {
+              "resourceType": "Observation",
+              "id": "mmrc_curr",
+              "status": "preliminary",
+              "valueInteger": 2,
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "450755002",
+                    "display": "Medical Research Council Dyspnoea scale score"
+                  }
+                ]
+              },
+              "referenceRange": [
+                {
+                  "low": {
+                    "value": 0,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "no breathlessness"
+                },
+                {
+                  "low": {
+                    "value": 1,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "breathless when hurrying or walking up a hill"
+                },
+                {
+                  "high": {
+                    "value": 2,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "breathless when walking slower than people of same age or has to stop when walking"
+                },
+                {
+                  "high": {
+                    "value": 3,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "Stops for breath after walking 100 yards, or after a few minutes on level ground"
+                },
+                {
+                  "high": {
+                    "value": 4,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "Too breathless to leave the house, or breathless when dressing"
+                }
+              ]
+            }
+          },
+          {
+            "resource": {
+              "resourceType": "Observation",
+              "id": "copd_exacerbations_number_curr",
+              "status": "preliminary",
+              "valueInteger": 0,
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "723245007",
+                    "display": "Number of chronic obstructive pulmonary disease exacerbations in past year"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "medication": {
+        "resourceType": "Medication",
+        "id": "current_medication",
+        "code": {
+          "coding": [
+            {
+              "system": "http://anonymous.org/data/DrugTSaba",
+              "code": "Saba",
+              "display": "administer medication containing SABA"
+            }
+          ]
+        }
+      },
+      "previousAssessment": {
+        "resourceType": "Bundle",
+        "entry": [
+          {
+            "resource": {
+              "resourceType": "Observation",
+              "id": "copd_group_prev",
+              "status": "final",
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "1097861000000108",
+                    "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group"
+                  }
+                ]
+              },
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "1097881000000104",
+                    "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group B"
+                  }
+                ]
+              },
+              "referenceRange": [
+                {
+                  "low": {
+                    "system": "http://snomed.info/sct",
+                    "code": "1097871000000101",
+                    "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group A"
+                  }
+                },
+                {
+                  "low": {
+                    "system": "http://snomed.info/sct",
+                    "code": "1097881000000104",
+                    "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group B"
+                  }
+                },
+                {
+                  "high": {
+                    "system": "http://snomed.info/sct",
+                    "code": "1097891000000102",
+                    "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group C"
+                  }
+                },
+                {
+                  "high": {
+                    "system": "http://snomed.info/sct",
+                    "code": "1097901000000101",
+                    "display": "Global Initiative for Chronic Obstructive Lung Disease 2017 group D"
                   }
                 }
+              ]
+            }
+          },
+          {
+            "resource": {
+              "resourceType": "Observation",
+              "id": "cat_score_prev",
+              "status": "final",
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "446660005",
+                    "display": "Chronic obstructive pulmonary disease assessment test score"
+                  }
+                ]
               },
-              {
-                "resource": {
-                  "resourceType": "Medication",
-                  "id": "DrugTLama",
-                  "code": {
-                    "coding": [
-                      {
-                        "system": "http://anonymous.org/data/DrugTLama",
-                        "code": "Lama",
-                        "display": "administer medication containing a  of LAMA"
-                      }
-                    ]
+              "valueInteger": 10,
+              "referenceRange": [
+                {
+                  "low": {
+                    "value": 0,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "high": {
+                    "value": 9,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  }
+                },
+                {
+                  "low": {
+                    "value": 10,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "high": {
+                    "value": 20,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  }
+                },
+                {
+                  "low": {
+                    "value": 21,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "high": {
+                    "value": 30,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  }
+                },
+                {
+                  "low": {
+                    "value": 31,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "high": {
+                    "value": 40,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
                   }
                 }
+              ]
+            }
+          },
+          {
+            "resource": {
+              "resourceType": "Observation",
+              "id": "mmrc_prev",
+              "status": "final",
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "450755002",
+                    "display": "Medical Research Council Dyspnoea scale score"
+                  }
+                ]
+              },
+              "valueInteger": 2,
+              "referenceRange": [
+                {
+                  "low": {
+                    "value": 0,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "no breathlessness"
+                },
+                {
+                  "low": {
+                    "value": 1,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "breathless when hurrying or walking up a hill"
+                },
+                {
+                  "high": {
+                    "value": 2,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "breathless when walking slower than people of same age or has to stop when walking"
+                },
+                {
+                  "high": {
+                    "value": 3,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "Stops for breath after walking 100 yards, or after a few minutes on level ground"
+                },
+                {
+                  "high": {
+                    "value": 4,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "{score}"
+                  },
+                  "text": "Too breathless to leave the house, or breathless when dressing"
+                }
+              ]
+            }
+          },
+          {
+            "resource": {
+              "resourceType": "Observation",
+              "id": "copd_exacerbations_number_prev",
+              "status": "final",
+              "valueInteger": 0,
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "723245007",
+                    "display": "Number of chronic obstructive pulmonary disease exacerbations in past year"
+                  }
+                ]
               }
-            ]
-          }
-        }
-      ]
-    },
-    "suggestedTreatmentsByCdsService": {
-      "resourceType": "Bundle",
-      "id": "suggested_treatments",
-      "type": "collection",
-      "entry": [
-        {
-          "resource": {
-            "resourceType": "Medication",
-            "id": "DrugTLaba",
-            "code": {
-              "coding": [
-                {
-                  "code": "Laba",
-                  "display": "administer medication containing LABA"
-                }
-              ]
             }
           }
-        },
-        {
-          "resource": {
-            "resourceType": "Medication",
-            "id": "DrugTLama",
-            "code": {
-              "coding": [
-                {
-                  "system": "http://anonymous.org/data/DrugTLama",
-                  "code": "Lama",
-                  "display": "administer medication containing a  of LAMA"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "resource": {
-            "resourceType": "Medication",
-            "id": "DrugCatLabaLama",
-            "code": {
-              "coding": [
-                {
-                  "system": "http://anonymous.org/data/DrugCatLabaLama",
-                  "code": "LabaLama",
-                  "display": "administer medication containing a combination of LABA and LAMA"
-                }
-              ]
-            }
-          }
-        }
-      ]
+        ]
+      }
     }
   }
-}
 ```
 
 ## Change Log
 
 | Version | Description        |
 | ------- | ------------------ |
-| 2.1     | tokenised approach |
+| 1.0     | initial approach |
