@@ -1,47 +1,47 @@
 # <mark>`copd-assess`</mark>
 
-| Metadata | Value
-| ---- | ----
-| specificationVersion | 2.1
-| hookVersion | 2,0
-| hookMaturity | [0 - Draft](../../specification/1.0/#hook-maturity-model)
+| Metadata             | Value                                                     |
+| -------------------- | --------------------------------------------------------- |
+| specificationVersion | 2.1                                                       |
+| hookVersion          | 2,0                                                       |
+| hookMaturity         | [0 - Draft](../../specification/1.0/#hook-maturity-model) |
 
 ## Workflow
 
 <mark>The `copd-assess` hook is triggered when the pulmonologist has completed the airflow limitation severity assessment on the current patient with COPD, to adjust medication if needed. The assessment is completed when values has been entered in the patient's record for the COPD assessment test (CAT) score and Medical Research Council (mMRC) Dyspnoea scale score.</mark>
 
 ## Context
+
 <mark>The context contains pairs of measurements of CAT score and mMRC dyspnoea scale, one taken on the current encounter and another as stored on the previous COPD checkup. Similarly for the number of COPD exacerbations. Additionally, the context contains information on whether asthma is present on the patient as well as the previous COPD diagnosis, that is, the identified COPD group and active medication.</mark>
 
-Field | Optionality | Prefetch Token | Type | Description
------ | -------- | ---- | ---- | ----
-<mark>`encounterId`</mark> | REQUIRED | No | *string* | <mark>identifier of current encounter</mark>
-<mark>`patientId`</mark> | REQUIRED | No | *string* | <mark>identifier of current patient</mark>
-<mark>`medication`</mark> | OPTIONAL | No | *object* | <mark>COPD medication currently active. Omission of this resource suggests  patient has just been newly diagnosed with COPD at this encounter.</mark>
-<mark>`previousAssessment`</mark> | OPTIONAL | No | *object* | <mark>FHIR Bundle of Observations in 'final' state representing  COPD group, CAT score, mMRC dyspnoea scale and number of exacerbations as recorded on the previous COPD-related encounter. Omission of the bundle resource entirely suggests  patient has just been newly diagnosed with COPD at this encounter.</mark>
-<mark>`currentAssessment`</mark> | REQUIRED | No | *object* | <mark>FHIR Bundle of Observations in 'preliminary' state representing  CAT score, mMRC dyspnoea scale and number of COPD exacerbations as measured at the current encounter.</mark>
-<mark>`asthma`</mark> | OPTIONAL | No | *object* | <mark>Condition resource denoting the presence of Asthma in the patient's record.</mark>
+| Field                             | Optionality | Prefetch Token | Type     | Description                                                                                                                                                                                                                                                                                                            |
+| --------------------------------- | ----------- | -------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <mark>`encounterId`</mark>        | REQUIRED    | No             | _string_ | <mark>identifier of current encounter</mark>                                                                                                                                                                                                                                                                           |
+| <mark>`patientId`</mark>          | REQUIRED    | No             | _string_ | <mark>identifier of current patient</mark>                                                                                                                                                                                                                                                                             |
+| <mark>`medication`</mark>         | OPTIONAL    | No             | _object_ | <mark>COPD medication currently active. Omission of this resource suggests patient has just been newly diagnosed with COPD at this encounter.</mark>                                                                                                                                                                   |
+| <mark>`previousAssessment`</mark> | OPTIONAL    | No             | _object_ | <mark>FHIR Bundle of Observations in 'final' state representing COPD group, CAT score, mMRC dyspnoea scale and number of exacerbations as recorded on the previous COPD-related encounter. Omission of the bundle resource entirely suggests patient has just been newly diagnosed with COPD at this encounter.</mark> |
+| <mark>`currentAssessment`</mark>  | REQUIRED    | No             | _object_ | <mark>FHIR Bundle of Observations in 'preliminary' state representing CAT score, mMRC dyspnoea scale and number of COPD exacerbations as measured at the current encounter.</mark>                                                                                                                                     |
+| <mark>`asthma`</mark>             | OPTIONAL    | No             | _object_ | <mark>Condition resource denoting the presence of Asthma in the patient's record.</mark>                                                                                                                                                                                                                               |
 
 ### Examples
-
 
 ```json
 {
   "hookInstance": "d1577c69-dfbe-44ad-ba6d-3e05e953b2ea",
-  "fhirServer": "https://example.org/fhir", 
+  "fhirServer": "https://example.org/fhir",
   "hook": "copd-assess",
   "context": {
     "encounterId": "987654",
-    "patientId": "1677163", 
+    "patientId": "1677163",
     "medication": {
       "resourceType": "Medication",
       "id": "current_medication",
       "code": {
         "coding": [
           {
-            "system": "http://anonymous.org/data/DrugTLaba",
-            "code": "Laba",
-            "display": "administer medication containing LABA"
+            "system": "http://anonymous.org/data/DrugTSaba",
+            "code": "Saba",
+            "display": "administer medication containing SABA"
           }
         ]
       }
@@ -51,7 +51,7 @@ Field | Optionality | Prefetch Token | Type | Description
       "entry": [
         {
           "resource": {
-            "resourceType": "Observation", 
+            "resourceType": "Observation",
             "id": "copd_group_prev",
             "status": "final",
             "code": {
@@ -284,7 +284,7 @@ Field | Optionality | Prefetch Token | Type | Description
                 }
               ]
             },
-            "valueInteger": 8,
+            "valueInteger": 23,
             "referenceRange": [
               {
                 "low": {
@@ -346,7 +346,7 @@ Field | Optionality | Prefetch Token | Type | Description
             "resourceType": "Observation",
             "id": "mmrc_curr",
             "status": "preliminary",
-            "valueInteger": 1,
+            "valueInteger": 2,
             "code": {
               "coding": [
                 {
@@ -437,13 +437,10 @@ Field | Optionality | Prefetch Token | Type | Description
     }
   }
 }
-
-
-
 ```
 
 ## Change Log
 
-Version | Description
----- | ----
-2.1 | FHIR resource parameters
+| Version | Description              |
+| ------- | ------------------------ |
+| 2.1     | FHIR resource parameters |
