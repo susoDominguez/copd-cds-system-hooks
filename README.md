@@ -1,7 +1,7 @@
 # ROAD2H-hooks
 Documentation to specify CDS hooks that trigger notifications for remote decision support on the management of patients with Chronic Obstructive Pulmonary Disease (COPD) (and possibly with Cardiovascular Disease (CVD) and/or Chronic Kidney Disease (CKD) comorbidities). The CDS services provided -as part of the COPD CDS system- are the assessment of the COPD severity in the patient and a personalised COPD treatment planning that takes into account potential conflicts with CVD and CKD comorbidities.
 
-The CDS hooks habe been developed as part of the ROAD2H project.
+The CDS hooks have been developed as part of the ROAD2H project.
 
 ````
 http://www.road2h.org/
